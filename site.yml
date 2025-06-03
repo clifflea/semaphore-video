@@ -2,6 +2,12 @@
 - hosts: web_servers
   become: true
   tasks:
-    - name: install apache
+    - name: install apache2 (Debian)
       ansible.builtin.package:
         name: apache2
+      when: ansible_distribution in ["Debian", "Ubuntu", "Linux Mint"]
+
+    - name: install httpd (RedHat)
+      dnf:
+        name: httpd
+      when: ansible_distribution in ["RedHat", "CentOS"]
